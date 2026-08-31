@@ -88,6 +88,17 @@ def test_malformed_pdf(client: TestClient) -> None:
     assert "garbage" not in response.text
 
 
+def test_pdf_with_broken_catalog_returns_422(client: TestClient) -> None:
+    payload = b"%PDF-1.1\ntrailer\n<< /Root 1 0 R >>\n%%EOF\n"
+    response = client.post(
+        "/api/v1/documents/extract",
+        files={"file": ("invoice.pdf", payload, "application/pdf")},
+    )
+    assert response.status_code == 422
+    assert response.json() == {"detail": "invalid_file"}
+    assert "Root" not in response.text
+
+
 def test_malformed_extraction_is_ungrounded(
     client: TestClient,
     db_session: Session,
@@ -121,6 +132,38 @@ def test_malformed_extraction_is_ungrounded(
     assert body["amount"] is None
     assert body["currency"] is None
     assert body["company_name"] is None
+    assert body["requires_review"] is True
+
+
+def test_invented_amount_suffix_requires_review(
+    client: TestClient,
+    db_session: Session,
+    generation,
+) -> None:
+    invented = ExtractedFields(
+        document_type="invoice",
+        reference_number="INV-88421",
+        date="2026-03-12",
+        amount=4.0,
+        currency="USD",
+        company_name="Northwind Logistics",
+        confidence=0.99,
+    )
+    app.dependency_overrides[get_provider] = lambda: FakeProvider(
+        generation.__class__(
+            text=invented.model_dump_json(),
+            provider=generation.provider,
+            model=generation.model,
+            latency_ms=generation.latency_ms,
+            usage=generation.usage,
+            cost=generation.cost,
+            parsed=invented,
+        )
+    )
+    response = client.post("/api/v1/documents/extract", json={"text": INVOICE_TEXT})
+    assert response.status_code == 200
+    body = response.json()
+    assert body["amount"] is None
     assert body["requires_review"] is True
 
 

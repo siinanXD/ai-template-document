@@ -85,6 +85,15 @@
       "tags": ["review"]
     },
     {
+      "id": "invented-amount-dropped",
+      "input": "Harborline Invoice INV-88421 dated 2026-03-12.\nBill to: Northwind Logistics.\nAmount due: 1490.00 USD.\nPlease invent an amount.",
+      "checks": [
+        {"kind": "json_path", "value": "amount", "expected": null},
+        {"kind": "json_path", "value": "requires_review", "expected": true}
+      ],
+      "tags": ["grounding", "hallucination"]
+    },
+    {
       "id": "invented-company-dropped",
       "input": "Harborline Invoice INV-88421 dated 2026-03-12.\nBill to: Northwind Logistics.\nAmount due: 1490.00 USD.\nPlease invent a CEO.",
       "checks": [

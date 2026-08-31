@@ -14,6 +14,16 @@ from evals.db import memory_session
 
 def classify(text: str) -> ExtractedFields:
     lowered = text.lower()
+    if "invent an amount" in lowered:
+        return ExtractedFields(
+            document_type="invoice",
+            reference_number="INV-88421",
+            date="2026-03-12",
+            amount=4.0,
+            currency="USD",
+            company_name="Northwind Logistics",
+            confidence=0.99,
+        )
     if "invent a ceo" in lowered:
         return ExtractedFields(
             document_type="invoice",

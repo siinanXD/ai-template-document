@@ -58,9 +58,19 @@ def test_png_is_unsupported() -> None:
         )
 
 
+# Header is valid enough for PdfReader() to return; the catalog is resolved lazily
+# on reader.pages and must still map to InvalidFile, not a 500.
+_BROKEN_ROOT_PDF = b"%PDF-1.1\ntrailer\n<< /Root 1 0 R >>\n%%EOF\n"
+
+
 def test_malformed_pdf_is_invalid() -> None:
     with pytest.raises(InvalidFile):
         extract_text(b"%PDF-not-a-real-file", ".pdf")
+
+
+def test_pdf_with_broken_root_is_invalid_not_a_crash() -> None:
+    with pytest.raises(InvalidFile, match="malformed"):
+        extract_text(_BROKEN_ROOT_PDF, ".pdf")
 
 
 def test_blank_pdf_is_invalid() -> None:

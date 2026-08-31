@@ -114,12 +114,14 @@ def _extract_txt(content: bytes) -> str:
 def _extract_pdf(content: bytes) -> str:
     try:
         reader = PdfReader(BytesIO(content))
-    except (PdfReadError, ValueError, OSError) as exc:
+        if getattr(reader, "is_encrypted", False):
+            raise InvalidFile("encrypted")
+        pages = [(page.extract_text() or "") for page in reader.pages]
+        text = "\n".join(pages).strip()
+    except InvalidFile:
+        raise
+    except (PdfReadError, ValueError, OSError, TypeError, KeyError) as exc:
         raise InvalidFile("malformed") from exc
-    if getattr(reader, "is_encrypted", False):
-        raise InvalidFile("encrypted")
-    pages = [(page.extract_text() or "") for page in reader.pages]
-    text = "\n".join(pages).strip()
     if not text:
         raise InvalidFile("empty")
     return text

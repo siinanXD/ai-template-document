@@ -24,4 +24,6 @@ Next.js file picker or pasted text
 
 PostgreSQL stores `document_runs`: file hash, extracted fields, confidence, review flag, model, latency, tokens, cost. It does not store original bytes or extracted text.
 
+Unlike `ai-starter` (technical metadata only) and `ai-template-rag` (query stored as a hash), this template persists extracted business fields such as `company_name`, `reference_number`, and `amount`. That is required for the extraction product. Original documents and raw extracted text still stay off disk.
+
 `agent-eval-harness` owns scoring and the regression gate. The deterministic target uses a fake provider. Stored run files under `.evals/` contain the API JSON — do not commit live runs of real customer documents.

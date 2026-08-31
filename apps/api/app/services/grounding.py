@@ -62,5 +62,11 @@ def drop_ungrounded(fields: ExtractedFields, source_text: str) -> tuple[Extracte
 
 def _amount_in_text(amount: float, compact_lower: str) -> bool:
     whole = f"{amount:.2f}".rstrip("0").rstrip(".")
-    candidates = {whole, f"{amount:.2f}", f"{int(amount)}" if amount == int(amount) else whole}
-    return any(candidate in compact_lower for candidate in candidates)
+    candidates = {whole, f"{amount:.2f}"}
+    if amount == int(amount):
+        candidates.add(f"{int(amount)}")
+    return any(_digit_bounded(candidate, compact_lower) for candidate in candidates)
+
+
+def _digit_bounded(candidate: str, compact_lower: str) -> bool:
+    return re.search(rf"(?<![\d.]){re.escape(candidate)}(?![\d])", compact_lower) is not None
