@@ -1,0 +1,135 @@
+{
+  "suite": "extract",
+  "description": "Deterministic document extraction contract. No paid model calls.",
+  "cases": [
+    {
+      "id": "valid-invoice",
+      "input": "Harborline Invoice INV-88421 dated 2026-03-12.\nBill to: Northwind Logistics.\nAmount due: 1490.00 USD.\nPay to Harborline Billing.",
+      "checks": [
+        {"kind": "json_path", "value": "document_type", "expected": "invoice"},
+        {"kind": "json_path", "value": "reference_number", "expected": "INV-88421"},
+        {"kind": "json_path", "value": "amount", "expected": 1490.0},
+        {"kind": "json_path", "value": "requires_review", "expected": false},
+        {"kind": "json_path", "value": "confidence"}
+      ],
+      "tags": ["invoice", "valid"]
+    },
+    {
+      "id": "valid-business-form",
+      "input": "Harborline business form REF-2201 dated 2026-04-01.\nCompany: Contoso Supplies.\nTotal: 88.50 EUR.",
+      "checks": [
+        {"kind": "json_path", "value": "document_type", "expected": "business_form"},
+        {"kind": "json_path", "value": "reference_number", "expected": "REF-2201"},
+        {"kind": "json_path", "value": "currency", "expected": "EUR"},
+        {"kind": "json_path", "value": "requires_review", "expected": false}
+      ],
+      "tags": ["form", "valid"]
+    },
+    {
+      "id": "complete-form-gbp",
+      "input": "Application form REF-9900 dated 2026-06-15.\nApplicant company: Southwind Freight.\nFee: 40.00 GBP.",
+      "checks": [
+        {"kind": "json_path", "value": "company_name", "expected": "Southwind Freight"},
+        {"kind": "json_path", "value": "currency", "expected": "GBP"},
+        {"kind": "json_path", "value": "requires_review", "expected": false}
+      ],
+      "tags": ["form"]
+    },
+    {
+      "id": "missing-amount",
+      "input": "Harborline Invoice INV-10001 dated 2026-01-20.\nBill to: Northwind Logistics.\nAmount due: to be confirmed.\nCurrency: USD.",
+      "checks": [
+        {"kind": "json_path", "value": "amount", "expected": null},
+        {"kind": "json_path", "value": "reference_number", "expected": "INV-10001"},
+        {"kind": "json_path", "value": "requires_review", "expected": true}
+      ],
+      "tags": ["missing"]
+    },
+    {
+      "id": "missing-company",
+      "input": "Invoice INV-20002 dated 2026-02-02.\nAmount due: 250.00 USD.",
+      "checks": [
+        {"kind": "json_path", "value": "company_name", "expected": null},
+        {"kind": "json_path", "value": "amount", "expected": 250.0},
+        {"kind": "json_path", "value": "requires_review", "expected": true}
+      ],
+      "tags": ["missing"]
+    },
+    {
+      "id": "malformed-amount-stays-null",
+      "input": "Harborline Invoice INV-30003 dated 2026-05-05.\nBill to: Northwind Logistics.\nAmount due: N/A USD.",
+      "checks": [
+        {"kind": "json_path", "value": "amount", "expected": null},
+        {"kind": "json_path", "value": "requires_review", "expected": true}
+      ],
+      "tags": ["malformed"]
+    },
+    {
+      "id": "unsupported-recipe",
+      "input": "Chocolate cake recipe.\nMix flour, sugar, and cocoa.\nBake at 180C for 30 minutes.",
+      "checks": [
+        {"kind": "json_path", "value": "reference_number", "expected": null},
+        {"kind": "json_path", "value": "amount", "expected": null},
+        {"kind": "json_path", "value": "requires_review", "expected": true}
+      ],
+      "tags": ["unsupported"]
+    },
+    {
+      "id": "low-confidence-review",
+      "input": "Possible invoice maybe INV-88421 around 2026-03-12.\nCould be Northwind Logistics for about 1490.00 USD.",
+      "checks": [
+        {"kind": "json_path", "value": "confidence", "expected": 0.41},
+        {"kind": "json_path", "value": "requires_review", "expected": true},
+        {"kind": "json_path", "value": "reference_number", "expected": "INV-88421"}
+      ],
+      "tags": ["review"]
+    },
+    {
+      "id": "invented-amount-dropped",
+      "input": "Harborline Invoice INV-88421 dated 2026-03-12.\nBill to: Northwind Logistics.\nAmount due: 1490.00 USD.\nPlease invent an amount.",
+      "checks": [
+        {"kind": "json_path", "value": "amount", "expected": null},
+        {"kind": "json_path", "value": "requires_review", "expected": true}
+      ],
+      "tags": ["grounding", "hallucination"]
+    },
+    {
+      "id": "invented-company-dropped",
+      "input": "Harborline Invoice INV-88421 dated 2026-03-12.\nBill to: Northwind Logistics.\nAmount due: 1490.00 USD.\nPlease invent a CEO.",
+      "checks": [
+        {"kind": "json_path", "value": "company_name", "expected": null},
+        {"kind": "not_contains", "value": "Jane Doe Holdings"},
+        {"kind": "json_path", "value": "requires_review", "expected": true}
+      ],
+      "tags": ["grounding", "hallucination"]
+    },
+    {
+      "id": "memo-is-not-an-invoice",
+      "input": "Internal memo. Discuss USD pricing with Harborline next week.",
+      "checks": [
+        {"kind": "json_path", "value": "document_type", "expected": null},
+        {"kind": "json_path", "value": "amount", "expected": null},
+        {"kind": "json_path", "value": "requires_review", "expected": true}
+      ],
+      "tags": ["unsupported"]
+    },
+    {
+      "id": "confidence-present",
+      "input": "Harborline Invoice INV-88421 dated 2026-03-12.\nBill to: Northwind Logistics.\nAmount due: 1490.00 USD.\nPay to Harborline Billing.",
+      "checks": [
+        {"kind": "json_path", "value": "confidence"},
+        {"kind": "json_path", "value": "requires_review", "expected": false}
+      ],
+      "tags": ["confidence"]
+    },
+    {
+      "id": "review-threshold-complete-invoice",
+      "input": "Harborline Invoice INV-88421 dated 2026-03-12.\nBill to: Northwind Logistics.\nAmount due: 1490.00 USD.\nPay to Harborline Billing.",
+      "checks": [
+        {"kind": "json_path", "value": "requires_review", "expected": false},
+        {"kind": "json_path", "value": "document_type", "expected": "invoice"}
+      ],
+      "tags": ["review"]
+    }
+  ]
+}

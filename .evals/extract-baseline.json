@@ -1,0 +1,366 @@
+{
+  "suite": "extract",
+  "started_at": "2026-08-31T16:50:45.767289+00:00",
+  "providers": [
+    null
+  ],
+  "cases": 13,
+  "generation_score": 1.0,
+  "retrieval_score": null,
+  "error_rate": 0.0,
+  "cost_eur": 0.0,
+  "duration_ms": 116,
+  "per_provider": {
+    "default": {
+      "generation": 1.0,
+      "retrieval": null,
+      "error_rate": 0.0,
+      "cases": 13,
+      "cost_eur": 0.0
+    }
+  },
+  "results": [
+    {
+      "case_id": "valid-invoice",
+      "provider": null,
+      "status": "ok",
+      "generation": {
+        "score": 1.0,
+        "passed": 5,
+        "total": 5,
+        "failures": []
+      },
+      "retrieval": {
+        "score": null,
+        "recall": null,
+        "precision": null,
+        "mrr": null,
+        "missing": []
+      },
+      "output": "{\"id\":\"5df4b64c-3831-4047-bdb1-aff5bfa2db28\",\"document_type\":\"invoice\",\"reference_number\":\"INV-88421\",\"date\":\"2026-03-12\",\"amount\":1490.0,\"currency\":\"USD\",\"company_name\":\"Northwind Logistics\",\"confidence\":0.93,\"requires_review\":false,\"model\":\"eval-fake\",\"latency_ms\":0,\"generation_latency_ms\":1,\"input_tokens\":1,\"output_tokens\":1,\"estimated_cost_usd\":null,\"created_at\":\"2026-08-31T16:50:45\"}",
+      "error": "",
+      "cost_eur": 0.0,
+      "latency_ms": 36,
+      "weight": 1.0,
+      "tags": [
+        "invoice",
+        "valid"
+      ]
+    },
+    {
+      "case_id": "valid-business-form",
+      "provider": null,
+      "status": "ok",
+      "generation": {
+        "score": 1.0,
+        "passed": 4,
+        "total": 4,
+        "failures": []
+      },
+      "retrieval": {
+        "score": null,
+        "recall": null,
+        "precision": null,
+        "mrr": null,
+        "missing": []
+      },
+      "output": "{\"id\":\"b9caa7de-83a5-44b2-a98f-d90a7dfd4e6f\",\"document_type\":\"business_form\",\"reference_number\":\"REF-2201\",\"date\":\"2026-04-01\",\"amount\":88.5,\"currency\":\"EUR\",\"company_name\":\"Contoso Supplies\",\"confidence\":0.9,\"requires_review\":false,\"model\":\"eval-fake\",\"latency_ms\":0,\"generation_latency_ms\":1,\"input_tokens\":1,\"output_tokens\":1,\"estimated_cost_usd\":null,\"created_at\":\"2026-08-31T16:50:45\"}",
+      "error": "",
+      "cost_eur": 0.0,
+      "latency_ms": 8,
+      "weight": 1.0,
+      "tags": [
+        "form",
+        "valid"
+      ]
+    },
+    {
+      "case_id": "complete-form-gbp",
+      "provider": null,
+      "status": "ok",
+      "generation": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "failures": []
+      },
+      "retrieval": {
+        "score": null,
+        "recall": null,
+        "precision": null,
+        "mrr": null,
+        "missing": []
+      },
+      "output": "{\"id\":\"4b53eb73-a86a-4f1d-8131-9568eeb48304\",\"document_type\":\"business_form\",\"reference_number\":\"REF-9900\",\"date\":\"2026-06-15\",\"amount\":40.0,\"currency\":\"GBP\",\"company_name\":\"Southwind Freight\",\"confidence\":0.91,\"requires_review\":false,\"model\":\"eval-fake\",\"latency_ms\":0,\"generation_latency_ms\":1,\"input_tokens\":1,\"output_tokens\":1,\"estimated_cost_usd\":null,\"created_at\":\"2026-08-31T16:50:45\"}",
+      "error": "",
+      "cost_eur": 0.0,
+      "latency_ms": 6,
+      "weight": 1.0,
+      "tags": [
+        "form"
+      ]
+    },
+    {
+      "case_id": "missing-amount",
+      "provider": null,
+      "status": "ok",
+      "generation": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "failures": []
+      },
+      "retrieval": {
+        "score": null,
+        "recall": null,
+        "precision": null,
+        "mrr": null,
+        "missing": []
+      },
+      "output": "{\"id\":\"ee9b949d-e21d-458f-881c-00ef7733a1eb\",\"document_type\":\"invoice\",\"reference_number\":\"INV-10001\",\"date\":\"2026-01-20\",\"amount\":null,\"currency\":\"USD\",\"company_name\":\"Northwind Logistics\",\"confidence\":0.7,\"requires_review\":true,\"model\":\"eval-fake\",\"latency_ms\":0,\"generation_latency_ms\":1,\"input_tokens\":1,\"output_tokens\":1,\"estimated_cost_usd\":null,\"created_at\":\"2026-08-31T16:50:45\"}",
+      "error": "",
+      "cost_eur": 0.0,
+      "latency_ms": 6,
+      "weight": 1.0,
+      "tags": [
+        "missing"
+      ]
+    },
+    {
+      "case_id": "missing-company",
+      "provider": null,
+      "status": "ok",
+      "generation": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "failures": []
+      },
+      "retrieval": {
+        "score": null,
+        "recall": null,
+        "precision": null,
+        "mrr": null,
+        "missing": []
+      },
+      "output": "{\"id\":\"fd0fdefb-2704-43e7-8965-1953c1b5bf87\",\"document_type\":\"invoice\",\"reference_number\":\"INV-20002\",\"date\":\"2026-02-02\",\"amount\":250.0,\"currency\":\"USD\",\"company_name\":null,\"confidence\":0.72,\"requires_review\":true,\"model\":\"eval-fake\",\"latency_ms\":0,\"generation_latency_ms\":1,\"input_tokens\":1,\"output_tokens\":1,\"estimated_cost_usd\":null,\"created_at\":\"2026-08-31T16:50:45\"}",
+      "error": "",
+      "cost_eur": 0.0,
+      "latency_ms": 6,
+      "weight": 1.0,
+      "tags": [
+        "missing"
+      ]
+    },
+    {
+      "case_id": "malformed-amount-stays-null",
+      "provider": null,
+      "status": "ok",
+      "generation": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "failures": []
+      },
+      "retrieval": {
+        "score": null,
+        "recall": null,
+        "precision": null,
+        "mrr": null,
+        "missing": []
+      },
+      "output": "{\"id\":\"849f54bc-3de6-4414-8f0f-140457721172\",\"document_type\":\"invoice\",\"reference_number\":\"INV-30003\",\"date\":\"2026-05-05\",\"amount\":null,\"currency\":\"USD\",\"company_name\":\"Northwind Logistics\",\"confidence\":0.55,\"requires_review\":true,\"model\":\"eval-fake\",\"latency_ms\":0,\"generation_latency_ms\":1,\"input_tokens\":1,\"output_tokens\":1,\"estimated_cost_usd\":null,\"created_at\":\"2026-08-31T16:50:45\"}",
+      "error": "",
+      "cost_eur": 0.0,
+      "latency_ms": 6,
+      "weight": 1.0,
+      "tags": [
+        "malformed"
+      ]
+    },
+    {
+      "case_id": "unsupported-recipe",
+      "provider": null,
+      "status": "ok",
+      "generation": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "failures": []
+      },
+      "retrieval": {
+        "score": null,
+        "recall": null,
+        "precision": null,
+        "mrr": null,
+        "missing": []
+      },
+      "output": "{\"id\":\"6827b3ac-e1d8-40b7-bbcd-d9d3068cd149\",\"document_type\":\"recipe\",\"reference_number\":null,\"date\":null,\"amount\":null,\"currency\":null,\"company_name\":null,\"confidence\":0.2,\"requires_review\":true,\"model\":\"eval-fake\",\"latency_ms\":0,\"generation_latency_ms\":1,\"input_tokens\":1,\"output_tokens\":1,\"estimated_cost_usd\":null,\"created_at\":\"2026-08-31T16:50:45\"}",
+      "error": "",
+      "cost_eur": 0.0,
+      "latency_ms": 5,
+      "weight": 1.0,
+      "tags": [
+        "unsupported"
+      ]
+    },
+    {
+      "case_id": "low-confidence-review",
+      "provider": null,
+      "status": "ok",
+      "generation": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "failures": []
+      },
+      "retrieval": {
+        "score": null,
+        "recall": null,
+        "precision": null,
+        "mrr": null,
+        "missing": []
+      },
+      "output": "{\"id\":\"9c62ec25-889f-4eb6-aa45-adc9da488b65\",\"document_type\":\"invoice\",\"reference_number\":\"INV-88421\",\"date\":\"2026-03-12\",\"amount\":1490.0,\"currency\":\"USD\",\"company_name\":\"Northwind Logistics\",\"confidence\":0.41,\"requires_review\":true,\"model\":\"eval-fake\",\"latency_ms\":0,\"generation_latency_ms\":1,\"input_tokens\":1,\"output_tokens\":1,\"estimated_cost_usd\":null,\"created_at\":\"2026-08-31T16:50:45\"}",
+      "error": "",
+      "cost_eur": 0.0,
+      "latency_ms": 6,
+      "weight": 1.0,
+      "tags": [
+        "review"
+      ]
+    },
+    {
+      "case_id": "invented-amount-dropped",
+      "provider": null,
+      "status": "ok",
+      "generation": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "failures": []
+      },
+      "retrieval": {
+        "score": null,
+        "recall": null,
+        "precision": null,
+        "mrr": null,
+        "missing": []
+      },
+      "output": "{\"id\":\"b42201d7-875c-446f-be46-55f8818e44d1\",\"document_type\":\"invoice\",\"reference_number\":\"INV-88421\",\"date\":\"2026-03-12\",\"amount\":null,\"currency\":\"USD\",\"company_name\":\"Northwind Logistics\",\"confidence\":0.99,\"requires_review\":true,\"model\":\"eval-fake\",\"latency_ms\":0,\"generation_latency_ms\":1,\"input_tokens\":1,\"output_tokens\":1,\"estimated_cost_usd\":null,\"created_at\":\"2026-08-31T16:50:45\"}",
+      "error": "",
+      "cost_eur": 0.0,
+      "latency_ms": 9,
+      "weight": 1.0,
+      "tags": [
+        "grounding",
+        "hallucination"
+      ]
+    },
+    {
+      "case_id": "invented-company-dropped",
+      "provider": null,
+      "status": "ok",
+      "generation": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "failures": []
+      },
+      "retrieval": {
+        "score": null,
+        "recall": null,
+        "precision": null,
+        "mrr": null,
+        "missing": []
+      },
+      "output": "{\"id\":\"3d80a81c-3d3c-45af-9b24-b6988c394076\",\"document_type\":\"invoice\",\"reference_number\":\"INV-88421\",\"date\":\"2026-03-12\",\"amount\":1490.0,\"currency\":\"USD\",\"company_name\":null,\"confidence\":0.97,\"requires_review\":true,\"model\":\"eval-fake\",\"latency_ms\":0,\"generation_latency_ms\":1,\"input_tokens\":1,\"output_tokens\":1,\"estimated_cost_usd\":null,\"created_at\":\"2026-08-31T16:50:45\"}",
+      "error": "",
+      "cost_eur": 0.0,
+      "latency_ms": 5,
+      "weight": 1.0,
+      "tags": [
+        "grounding",
+        "hallucination"
+      ]
+    },
+    {
+      "case_id": "memo-is-not-an-invoice",
+      "provider": null,
+      "status": "ok",
+      "generation": {
+        "score": 1.0,
+        "passed": 3,
+        "total": 3,
+        "failures": []
+      },
+      "retrieval": {
+        "score": null,
+        "recall": null,
+        "precision": null,
+        "mrr": null,
+        "missing": []
+      },
+      "output": "{\"id\":\"917b6968-4dd1-430e-bd64-4dfbfff735f6\",\"document_type\":null,\"reference_number\":null,\"date\":null,\"amount\":null,\"currency\":\"USD\",\"company_name\":\"Harborline\",\"confidence\":0.3,\"requires_review\":true,\"model\":\"eval-fake\",\"latency_ms\":0,\"generation_latency_ms\":1,\"input_tokens\":1,\"output_tokens\":1,\"estimated_cost_usd\":null,\"created_at\":\"2026-08-31T16:50:45\"}",
+      "error": "",
+      "cost_eur": 0.0,
+      "latency_ms": 6,
+      "weight": 1.0,
+      "tags": [
+        "unsupported"
+      ]
+    },
+    {
+      "case_id": "confidence-present",
+      "provider": null,
+      "status": "ok",
+      "generation": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "failures": []
+      },
+      "retrieval": {
+        "score": null,
+        "recall": null,
+        "precision": null,
+        "mrr": null,
+        "missing": []
+      },
+      "output": "{\"id\":\"fea7da6c-0f84-4708-ab31-5b3dcc35af20\",\"document_type\":\"invoice\",\"reference_number\":\"INV-88421\",\"date\":\"2026-03-12\",\"amount\":1490.0,\"currency\":\"USD\",\"company_name\":\"Northwind Logistics\",\"confidence\":0.93,\"requires_review\":false,\"model\":\"eval-fake\",\"latency_ms\":0,\"generation_latency_ms\":1,\"input_tokens\":1,\"output_tokens\":1,\"estimated_cost_usd\":null,\"created_at\":\"2026-08-31T16:50:45\"}",
+      "error": "",
+      "cost_eur": 0.0,
+      "latency_ms": 6,
+      "weight": 1.0,
+      "tags": [
+        "confidence"
+      ]
+    },
+    {
+      "case_id": "review-threshold-complete-invoice",
+      "provider": null,
+      "status": "ok",
+      "generation": {
+        "score": 1.0,
+        "passed": 2,
+        "total": 2,
+        "failures": []
+      },
+      "retrieval": {
+        "score": null,
+        "recall": null,
+        "precision": null,
+        "mrr": null,
+        "missing": []
+      },
+      "output": "{\"id\":\"ba28d3cd-2865-45d0-b9ee-25874fb8fa6c\",\"document_type\":\"invoice\",\"reference_number\":\"INV-88421\",\"date\":\"2026-03-12\",\"amount\":1490.0,\"currency\":\"USD\",\"company_name\":\"Northwind Logistics\",\"confidence\":0.93,\"requires_review\":false,\"model\":\"eval-fake\",\"latency_ms\":0,\"generation_latency_ms\":1,\"input_tokens\":1,\"output_tokens\":1,\"estimated_cost_usd\":null,\"created_at\":\"2026-08-31T16:50:45\"}",
+      "error": "",
+      "cost_eur": 0.0,
+      "latency_ms": 6,
+      "weight": 1.0,
+      "tags": [
+        "review"
+      ]
+    }
+  ]
+}
